@@ -12,4 +12,12 @@ export class AppController {
       message: this.appService.getHello()
     };
   }
+
+  @Get('forms')
+  @Render('forms')
+  getFizetes(){
+    return{
+
+    };
+  }
 }
