@@ -31,13 +31,19 @@ export class AppController {
     @Res() res: Response){
     let errors = [];
 
-    if (!datadto.name || !datadto.bankcard) {
-      errors.push("Mindent ki kell tölteni!");
+    if (!datadto.name) {
+      errors.push("A nevet ki kell tölteni!");
     }
 
-    if (typeof(datadto.accepted)) {
+    if (typeof(datadto.accepted)== undefined) {
       errors.push("Bele kell egyezni!")
     }
+
+    if(!datadto.bankcard){
+      errors.push("Bankszámla szám megadása kötelező!")
+    }else if(! /^\d{8}-\d{8}$/.test(datadto.bankcard)&&! /^\d{8}-\d{8}-\d{8}$/.test(datadto.bankcard)){
+      errors.push('A bankszámla XXXXXXXX-XXXXXXXX formátumú vagy XXXXXXXX-XXXXXXXX-XXXXXXXX legyen! ')
+  }
 
     if (errors.length > 0) {
       res.render('forms', {
@@ -45,6 +51,8 @@ export class AppController {
         errors
       })
     }
+
+
     return res.redirect('/Success')
   }
 
