@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Render, Body, Res } from '@nestjs/common';
+import { Controller, Get, Post, Render, Body, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { AppService } from './app.service';
 import { datadto } from './data.dto';
 import { Response } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { error } from 'console';
 
 @Controller()
@@ -50,6 +51,11 @@ export class AppController {
         data: datadto,
         errors
       })
+    }
+    else{
+      let adatokSor = datadto.name + ": " + datadto.bankcard
+      const fs = require('fs')
+      fs.appendFile('data.csv', adatokSor , (err) => {if (err) throw err; })
     }
 
 
